@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechInsights - Latest in Technology News</title>
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f1f5f9;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            color: var(--dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: white;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #4f46e5 0%, #7e3af2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .hero-content {
+            max-width: 650px;
+            z-index: 2;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* Blog Posts Section */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .post-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .post-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .post-card:hover .post-img {
+            transform: scale(1.05);
+        }
+        
+        .post-content {
+            padding: 25px;
+        }
+        
+        .post-category {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .post-card:hover .post-title {
+            color: var(--primary);
+        }
+        
+        .post-excerpt {
+            color: var(--gray);
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+        
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .author-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .read-more {
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+        
+        .read-more:hover {
+            gap: 8px;
+            color: var(--primary-dark);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding-top: 70px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .footer-links a {
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-icon:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-btn:hover {
+            background: #0da271;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+        
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalOpen 0.4s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            z-index: 10;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
+        }
+        
+        .modal-header {
+            padding: 30px 40px 20px;
+            border-bottom: 1px solid var(--light-gray);
+            position: relative;
+        }
+        
+        .modal-category {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .modal-title {
+            font-size: 2.2rem;
+            margin: 10px 0 15px;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+        
+        .modal-meta {
+            display: flex;
+            gap: 25px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .modal-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .modal-featured-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .modal-body {
+            padding: 30px 40px;
+            line-height: 1.8;
+            color: #334155;
+        }
+        
+        .modal-body p {
+            margin-bottom: 20px;
+        }
+        
+        .modal-body h2 {
+            font-size: 1.8rem;
+            margin: 30px 0 15px;
+            color: var(--dark);
+        }
+        
+        .modal-body h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 12px;
+            color: var(--dark);
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .modal-featured-img {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                text-align: center;
+                padding: 30px 0;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                transition: var(--transition);
+                gap: 20px;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .modal-featured-img {
+                height: 300px;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .footer-content {
+                gap: 30px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input,
+            .newsletter-btn {
+                border-radius: 8px;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .modal-title {
+                font-size: 1.8rem;
+            }
+            
+            .modal-featured-img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="container nav-container">
+                <a href="#" class="logo">Tech<span>Insights</span></a>
+                <button class="hamburger" id="hamburger">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Exploring Tomorrow's Technology Today</h1>
+                <p>Stay ahead of the curve with in-depth analysis, reviews, and insights on the latest tech trends, gadgets, and innovations shaping our future.</p>
+                <div class="hero-btns">
+                    <a href="#blog" class="btn">Latest Articles</a>
+                    <a href="#categories" class="btn btn-outline">Tech Categories</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <h2 class="section-title">Latest Articles</h2>
+            <div class="posts-grid">
+                <!-- Post 1 -->
+                <article class="post-card" data-id="1">
+                    <img src="https://picsum.photos/id/234/600/400" alt="AI Revolution" class="post-img">
+                    <div class="post-content">
+                        <span class="post-category">Artificial Intelligence</span>
+                        <h3 class="post-title">The AI Revolution: How Machine Learning is Transforming Industries</h3>
+                        <p class="post-excerpt">From healthcare to finance, AI is revolutionizing how businesses operate. We explore real-world applications that are delivering tangible results today.</p>
+                        <div class="post-meta">
+                            <div class="post-author">
+                                <span class="author-avatar">SJ</span>
+                                <span>Sarah Johnson</span>
+                            </div>
+                            <span>June 15, 2026</span>
+                        </div>
+                        <a href="#" class="read-more">Read Article →</a>
+                    </div>
+                </article>
+                
+                <!-- Post 2 -->
+                <article class="post-card" data-id="2">
+                    <img src="https://picsum.photos/id/106/600/400" alt="Quantum Computing" class="post-img">
+                    <div class="post-content">
+                        <span class="post-category">Future Tech</span>
+                        <h3 class="post-title">Quantum Computing Breakthrough: Solving Problems Beyond Classical Reach</h3>
+                        <p class="post-excerpt">Scientists have achieved quantum supremacy in a new domain. We break down what this means for cryptography, drug discovery, and climate modeling.</p>
+                        <div class="post-meta">
+                            <div class="post-author">
+                                <span class="author-avatar">MK</span>
+                                <span>Michael Kim</span>
+                            </div>
+                            <span>June 12, 2026</span>
+                        </div>
+                        <a href="#" class="read-more">Read Article →</a>
+                    </div>
+                </article>
+                
+                <!-- Post 3 -->
+                <article class="post-card" data-id="3">
+                    <img src="https://picsum.photos/id/297/600/400" alt="AR Glasses" class="post-img">
+                    <div class="post-content">
+                        <span class="post-category">Wearables</span>
+                        <h3 class="post-title">Next-Gen AR Glasses: The Future of Personal Computing</h3>
+                        <p class="post-excerpt">Forget smartphones - augmented reality glasses are set to become our primary interface with digital information. Here's what the next generation promises.</p>
+                        <div class="post-meta">
+                            <div class="post-author">
+                                <span class="author-avatar">AL</span>
+                                <span>Alex Lee</span>
+                            </div>
+                            <span>June 10, 2026</span>
+                        </div>
+                        <a href="#" class="read-more">Read Article →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TechInsights</h3>
+                    <p>Our mission is to make technology accessible and understandable for everyone. We provide insightful analysis without the jargon.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a1.5 1.5 0 0 0-3 0v5.3h-3v-5.3a1.5 1.5 0 0 0-3 0v5.3H9.5v-3.5a1.5 1.5 0 0 0-3 0v3.5H5v-7.5a4.5 4.5 0 0 1 4.5-4.5h3a4.5 4.5 0 0 1 4.5 4.5v7.5h-1.5z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section" id="categories">
+                    <h3>Tech Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Artificial Intelligence</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                        <li><a href="#">Cloud Computing</a></li>
+                        <li><a href="#">Blockchain & Crypto</a></li>
+                        <li><a href="#">IoT & Smart Devices</a></li>
+                        <li><a href="#">Future of Work</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our weekly newsletter for the latest tech insights and exclusive content.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your email address">
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 TechInsights. All rights reserved. Designed with ❤️ for tech enthusiasts</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top">↑</button>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <span class="modal-category">Artificial Intelligence</span>
+                <h1 class="modal-title">The AI Revolution: How Machine Learning is Transforming Industries</h1>
+                <div class="modal-meta">
+                    <div class="modal-author">
+                        <span class="modal-author-avatar">SJ</span>
+                        <span>Sarah Johnson</span>
+                    </div>
+                    <span>June 15, 2026</span>
+                    <span>12 min read</span>
+                </div>
+            </div>
+            <img src="https://picsum.photos/id/234/900/400" alt="AI Revolution" class="modal-featured-img">
+            <div class="modal-body">
+                <p>Artificial intelligence has moved beyond the realm of science fiction to become a transformative force across nearly every industry. From healthcare to finance, manufacturing to retail, AI systems are delivering tangible results that were unimaginable just a decade ago.</p>
+                
+                <h2>Healthcare Breakthroughs</h2>
+                <p>In the medical field, AI algorithms are now detecting diseases with greater accuracy than human specialists in some cases. At Stanford Medical Center, a deep learning system recently identified skin cancer with <span class="highlight">94% accuracy</span> - outperforming board-certified dermatologists. Similarly, AI-powered imaging analysis is catching early signs of diabetic retinopathy and breast cancer that might otherwise go unnoticed.</p>
+                
+                <p>Beyond diagnosis, AI is accelerating drug discovery. What traditionally took pharmaceutical companies 10-15 years and billions of dollars can now be accomplished in a fraction of the time. Companies like Insilico Medicine are using generative AI to design novel drug molecules that target specific diseases, dramatically reducing development timelines.</p>
+                
+                <h2>Manufacturing Revolution</h2>
+                <p>On factory floors worldwide, AI-driven predictive maintenance is preventing costly equipment failures before they occur. By analyzing sensor data from machinery, these systems can predict failures with up to <span class="highlight">90% accuracy</span>, reducing downtime by as much as 50% according to recent McKinsey research.</p>
+                
+                <p>Quality control has also been transformed. Computer vision systems now inspect products at every stage of production with superhuman precision. At Foxconn facilities, AI inspection systems have reduced defect rates by 35% while increasing throughput by 25%.</p>
+                
+                <h2>Financial Services Transformation</h2>
+                <p>The finance sector has embraced AI for fraud detection, risk assessment, and algorithmic trading. JPMorgan Chase's COiN platform uses machine learning to review legal documents and extract important data points - work that previously required <span class="highlight">360,000 hours of human labor</span> annually can now be completed in seconds.</p>
+                
+                <p>Personalized banking experiences powered by AI are becoming the norm. Chatbots handle routine inquiries, while recommendation engines suggest financial products tailored to individual needs and risk profiles. This personalization has increased customer satisfaction scores by 20-30% across major banking institutions.</p>
+                
+                <h2>Challenges and Ethical Considerations</h2>
+                <p>Despite these impressive advances, significant challenges remain. Algorithmic bias continues to be a critical concern, with AI systems sometimes perpetuating or even amplifying societal inequalities. The "black box" nature of many deep learning systems makes it difficult to understand how decisions are made, raising transparency issues.</p>
+                
+                <p>Workforce displacement is another major concern. While AI creates new jobs, it also eliminates others. A recent World Economic Forum report estimates that by 2027, AI and automation could displace 85 million jobs while creating 97 million new ones - but the transition won't be seamless for everyone.</p>
+                
+                <h2>The Path Forward</h2>
+                <p>As we navigate this transformation, responsible AI development must be prioritized. This includes:</p>
+                <ul style="padding-left: 20px; margin: 20px 0;">
+                    <li><strong>Diverse training data</strong> to minimize bias</li>
+                    <li><strong>Explainable AI systems</strong> that can show their reasoning</li>
+                    <li><strong>Robust governance frameworks</strong> for deployment and monitoring</li>
+                    <li><strong>Reskilling initiatives</strong> for workers affected by automation</li>
+                </ul>
+                
+                <p>The AI revolution isn't coming - it's already here. Organizations that embrace these technologies responsibly while addressing their challenges will thrive in this new era. The future belongs not to those who fear AI, but to those who learn to harness its power ethically and effectively.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        const postCards = document.querySelectorAll('.post-card');
+        const modal = document.getElementById('articleModal');
+        const closeModal = document.querySelector('.close-modal');
+        const readMoreLinks = document.querySelectorAll('.read-more');
+
+        // Mobile Menu Toggle
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const bars = hamburger.querySelectorAll('.bar');
+            if (navLinks.classList.contains('active')) {
+                hamburger.setAttribute('aria-expanded', 'true');
+                bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                bars[1].style.opacity = '0';
+                bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                hamburger.setAttribute('aria-expanded', 'false');
+                bars[0].style.transform = 'rotate(0) translate(0, 0)';
+                bars[1].style.opacity = '1';
+                bars[2].style.transform = 'rotate(0) translate(0, 0)';
+            }
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                resetHamburger();
+            });
+        });
+
+        function resetHamburger() {
+            const bars = hamburger.querySelectorAll('.bar');
+            hamburger.setAttribute('aria-expanded', 'false');
+            bars[0].style.transform = 'rotate(0) translate(0, 0)';
+            bars[1].style.opacity = '1';
+            bars[2].style.transform = 'rotate(0) translate(0, 0)';
+        }
+
+        // Scroll to Top Button
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('active');
+            } else {
+                scrollToTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Article Modal Functionality
+        const articles = {
+            1: {
+                category: "Artificial Intelligence",
+                title: "The AI Revolution: How Machine Learning is Transforming Industries",
+                author: "Sarah Johnson",
+                avatar: "SJ",
+                date: "June 15, 2026",
+                readTime: "12 min read",
+                image: "https://picsum.photos/id/234/900/400",
+                content: `
+                    <p>Artificial intelligence has moved beyond the realm of science fiction to become a transformative force across nearly every industry. From healthcare to finance, manufacturing to retail, AI systems are delivering tangible results that were unimaginable just a decade ago.</p>
+                    
+                    <h2>Healthcare Breakthroughs</h2>
+                    <p>In the medical field, AI algorithms are now detecting diseases with greater accuracy than human specialists in some cases. At Stanford Medical Center, a deep learning system recently identified skin cancer with <span class="highlight">94% accuracy</span> - outperforming board-certified dermatologists. Similarly, AI-powered imaging analysis is catching early signs of diabetic retinopathy and breast cancer that might otherwise go unnoticed.</p>
+                    
+                    <p>Beyond diagnosis, AI is accelerating drug discovery. What traditionally took pharmaceutical companies 10-15 years and billions of dollars can now be accomplished in a fraction of the time. Companies like Insilico Medicine are using generative AI to design novel drug molecules that target specific diseases, dramatically reducing development timelines.</p>
+                    
+                    <h2>Manufacturing Revolution</h2>
+                    <p>On factory floors worldwide, AI-driven predictive maintenance is preventing costly equipment failures before they occur. By analyzing sensor data from machinery, these systems can predict failures with up to <span class="highlight">90% accuracy</span>, reducing downtime by as much as 50% according to recent McKinsey research.</p>
+                    
+                    <p>Quality control has also been transformed. Computer vision systems now inspect products at every stage of production with superhuman precision. At Foxconn facilities, AI inspection systems have reduced defect rates by 35% while increasing throughput by 25%.</p>
+                    
+                    <h2>Financial Services Transformation</h2>
+                    <p>The finance sector has embraced AI for fraud detection, risk assessment, and algorithmic trading. JPMorgan Chase's COiN platform uses machine learning to review legal documents and extract important data points - work that previously required <span class="highlight">360,000 hours of human labor</span> annually can now be completed in seconds.</p>
+                    
+                    <p>Personalized banking experiences powered by AI are becoming the norm. Chatbots handle routine inquiries, while recommendation engines suggest financial products tailored to individual needs and risk profiles. This personalization has increased customer satisfaction scores by 20-30% across major banking institutions.</p>
+                    
+                    <h2>Challenges and Ethical Considerations</h2>
+                    <p>Despite these impressive advances, significant challenges remain. Algorithmic bias continues to be a critical concern, with AI systems sometimes perpetuating or even amplifying societal inequalities. The "black box" nature of many deep learning systems makes it difficult to understand how decisions are made, raising transparency issues.</p>
+                    
+                    <p>Workforce displacement is another major concern. A recent World Economic Forum report estimates that by 2027, AI and automation could displace 85 million jobs while creating 97 million new ones - but the transition won't be seamless for everyone.</p>
+                    
+                    <h2>The Path Forward</h2>
+                    <p>As we navigate this transformation, responsible AI development must be prioritized. This includes:</p>
+                    <ul style="padding-left: 20px; margin: 20px 0;">
+                        <li><strong>Diverse training data</strong> to minimize bias</li>
+                        <li><strong>Explainable AI systems</strong> that can show their reasoning</li>
+                        <li><strong>Robust governance frameworks</strong> for deployment and monitoring</li>
+                        <li><strong>Reskilling initiatives</strong> for workers affected by automation</li>
+                    </ul>
+                    
+                    <p>The AI revolution isn't coming - it's already here. Organizations that embrace these technologies responsibly while addressing their challenges will thrive in this new era. The future belongs not to those who fear AI, but to those who learn to harness its power ethically and effectively.</p>
+                `
+            },
+            2: {
+                category: "Future Tech",
+                title: "Quantum Computing Breakthrough: Solving Problems Beyond Classical Reach",
+                author: "Michael Kim",
+                avatar: "MK",
+                date: "June 12, 2026",
+                readTime: "15 min read",
+                image: "https://picsum.photos/id/106/900/400",
+                content: `
+                    <p>Quantum computing has long promised to revolutionize how we solve complex problems, but practical applications have remained elusive. That's changing dramatically with recent breakthroughs that bring us closer to quantum advantage - the point where quantum computers outperform classical supercomputers for real-world problems.</p>
+                    
+                    <h2>The Quantum Milestone</h2>
+                    <p>Researchers at QuantumTech Labs have achieved quantum supremacy in material science simulations, solving a problem that would take the world's fastest supercomputer over 10,000 years to complete. Their 128-qubit quantum processor performed the calculation in just <span class="highlight">3 hours and 22 minutes</span>.</p>
+                    
+                    <p>"This isn't just a lab experiment," explains Dr. Elena Rodriguez, lead researcher. "The simulation accurately predicted the properties of a high-temperature superconductor that had previously defied explanation. Within months, we could see practical applications in energy transmission."</p>
+                    
+                    <h2>Real-World Applications Emerge</h2>
+                    <p>The implications extend far beyond theoretical physics:</p>
+                    
+                    <p><strong>Drug Discovery:</strong> Quantum simulations can model molecular interactions at an unprecedented scale. A collaboration between PharmaCorp and QuantumAI has identified three promising compounds for treating Alzheimer's disease that were missed by traditional screening methods.</p>
+                    
+                    <p><strong>Climate Modeling:</strong> Climate scientists are using quantum algorithms to create more accurate models of atmospheric chemistry. The new models can simulate cloud formation processes with 100x greater resolution, potentially improving long-term climate predictions by 40%.</p>
+                    
+                    <p><strong>Optimization Problems:</strong> Logistics companies are testing quantum algorithms to optimize global shipping routes. Early results show potential fuel savings of 15-20% across entire fleets - which could reduce global shipping emissions by millions of tons annually.</p>
+                    
+                    <h2>Overcoming Quantum Challenges</h2>
+                    <p>Quantum systems face significant hurdles before widespread adoption. Qubits (quantum bits) are notoriously fragile, easily disrupted by environmental noise - a problem called decoherence. Recent advances in error correction have dramatically improved stability:</p>
+                    
+                    <ul style="padding-left: 20px; margin: 20px 0;">
+                        <li><strong>Topological qubits</strong> developed by Microsoft are inherently more stable</li>
+                        <li><strong>Surface code error correction</strong> has reduced error rates by 99.5%</li>
+                        <li><strong>Cryogenic control chips</strong> now operate at quantum temperatures, reducing wiring complexity</li>
+                    </ul>
+                    
+                    <h2>The Road Ahead</h2>
+                    <p>While we're still years away from quantum laptops, the path forward is becoming clear:</p>
+                    
+                    <p><strong>2026-2028:</strong> Specialized quantum co-processors will accelerate specific tasks like molecular simulation and optimization in research labs and large corporations.</p>
+                    
+                    <p><strong>2029-2032:</strong> Quantum cloud services will become mainstream, allowing businesses to access quantum power without owning hardware. Companies like IBM and Google are already building quantum data centers.</p>
+                    
+                    <p><strong>2033+:</strong> Hybrid computing systems will seamlessly integrate classical and quantum processing, making quantum acceleration invisible to end users but transforming fields from medicine to materials science.</p>
+                    
+                    <p>The quantum revolution won't replace classical computing but will augment it for specific, complex problems. As Dr. Rodriguez notes, "We're not building quantum computers to run Word documents faster. We're building them to solve problems that are fundamentally impossible today - problems that could save lives, protect our planet, and unlock new frontiers of science."</p>
+                    
+                    <p>With quantum hardware advancing faster than predicted and algorithms maturing rapidly, the question is no longer "if" but "when" quantum computing will transform our world. The countdown to practical quantum advantage has begun.</p>
+                `
+            },
+            3: {
+                category: "Wearables",
+                title: "Next-Gen AR Glasses: The Future of Personal Computing",
+                author: "Alex Lee",
+                avatar: "AL",
+                date: "June 10, 2026",
+                readTime: "10 min read",
+                image: "https://picsum.photos/id/297/900/400",
+                content: `
+                    <p>For decades, science fiction has promised augmented reality glasses that seamlessly blend digital information with our physical world. Recent advancements in optics, battery technology, and AI have finally made this vision a practical reality. The next generation of AR glasses is poised to replace smartphones as our primary computing interface.</p>
+                    
+                    <h2>Breaking Through Technical Barriers</h2>
+                    <p>Early AR headsets were bulky, uncomfortable, and offered limited functionality. Today's breakthroughs solve these fundamental challenges:</p>
+                    
+                    <p><strong>Holographic Waveguides:</strong> Companies like Lumus and Microsoft have developed waveguide displays that project sharp 4K images while maintaining 90% transparency to the real world. These optical systems are now thin enough to fit in frames that look like ordinary eyeglasses.</p>
+                    
+                    <p><strong>Battery Innovation:</strong> Solid-state batteries with 2.5x the energy density of traditional lithium-ion cells now power all-day use. Combined with ultra-efficient processors, modern AR glasses can operate for 18+ hours on a single charge.</p>
+                    
+                    <p><strong>Context-Aware AI:</strong> On-device neural networks process visual data in real-time, understanding what the user is seeing and providing relevant information without requiring explicit commands. This contextual awareness makes interactions feel natural and intuitive.</p>
+                    
+                    <h2>Real-World Applications Transforming Daily Life</h2>
+                    <p>The implications extend far beyond gaming and entertainment:</p>
+                    
+                    <p><strong>Professional Training:</strong> Surgeons at Mayo Clinic now use AR glasses for complex procedures, with vital patient data and 3D anatomical models appearing in their field of view. Training times for new surgical techniques have decreased by 65% thanks to guided AR instruction.</p>
+                    
+                    <p><strong>Remote Collaboration:</strong> Field technicians repairing industrial equipment can share their view with experts thousands of miles away. The expert can draw annotations directly on the technician's field of view, highlighting components and providing step-by-step guidance. Companies report 40% faster repair times and 30% fewer repeat visits.</p>
+                    
+                    <p><strong>Accessibility:</strong> For visually impaired users, AR glasses can provide audio descriptions of surroundings, read text aloud, and even recognize faces and emotions. This technology is restoring independence to millions who previously relied on human assistance for everyday tasks.</p>
+                    
+                    <h2>Privacy and Social Considerations</h2>
+                    <p>As with any powerful technology, AR glasses raise important questions:</p>
+                    
+                    <p><strong>Privacy Protection:</strong> Leading manufacturers have implemented physical camera shutters and LED indicators that clearly show when recording is active. Some models include "privacy zones" where recording is automatically disabled, such as in bathrooms and changing rooms.</p>
+                    
+                    <p><strong>Social Norms:</strong> New etiquette is evolving around AR use. Many venues now have designated "AR-free zones," and glasses include subtle visual cues to indicate when someone is actively using AR features versus simply wearing them as eyewear.</p>
+                    
+                    <p><strong>Digital Wellbeing:</strong> Unlike smartphones that demand constant attention, AR interfaces are designed to be glanceable and contextually relevant. Features like "focus mode" automatically dim non-essential notifications during important conversations or while driving.</p>
+                    
+                    <h2>The Path to Mass Adoption</h2>
+                    <p>Several factors are accelerating mainstream acceptance:</p>
+                    
+                    <p><strong>Fashion Integration:</strong> Major eyewear brands like Ray-Ban and Oakley now offer prescription-compatible AR frames in dozens of styles. The technology has disappeared into designs that people actually want to wear.</p>
+                    
+                    <p><strong>App Ecosystem Growth:</strong> With over 50,000 AR applications now available, from language translation to navigation to fitness coaching, the platform is attracting developers at an unprecedented rate.</p>
+                    
+                    <p><strong>Enterprise Investment:</strong> Companies are deploying AR glasses to frontline workers at massive scale. Walmart has equipped 1 million employees with AR glasses for inventory management and customer assistance, reporting $800 million in annual productivity gains.</p>
+                    
+                    <p>As Apple's CEO recently stated, "AR glasses will be the most personal computing device ever created, enhancing how we connect with each other and the world around us." With major tech companies investing billions and the first truly consumer-friendly devices shipping this year, the AR revolution is no longer on the horizon—it's here.</p>
+                    
+                    <p>The smartphone era transformed how we access information. The AR era will transform how we experience reality itself.</p>
+                `
+            }
+        };
+
+        // Open modal with article details
+        function openArticleModal(postId) {
+            const article = articles[postId];
+            if (article) {
+                document.querySelector('.modal-category').textContent = article.category;
+                document.querySelector('.modal-title').textContent = article.title;
+                document.querySelector('.modal-author-avatar').textContent = article.avatar;
+                document.querySelector('.modal-author span:nth-child(2)').textContent = article.author;
+                document.querySelector('.modal-meta span:nth-child(2)').textContent = article.date;
+                document.querySelector('.modal-meta span:nth-child(3)').textContent = article.readTime;
+                document.querySelector('.modal-featured-img').src = article.image;
+                document.querySelector('.modal-body').innerHTML = article.content;
+                
+                modal.style.display = "flex";
+                document.body.style.overflow = "hidden";
+                
+                // Scroll to top of modal content
+                document.querySelector('.modal-content').scrollTop = 0;
+            }
+        }
+
+        // Close modal
+        function closeModalHandler() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        // Event listeners for "Read More" links
+        readMoreLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const postCard = e.target.closest('.post-card');
+                const postId = postCard.getAttribute('data-id');
+                openArticleModal(postId);
+            });
+        });
+
+        // Close modal when clicking the close button
+        closeModal.addEventListener('click', closeModalHandler);
+
+        // Close modal when clicking outside the content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalHandler();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModalHandler();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form submission handling
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            if (email) {
+                alert(`Thank you for subscribing! We'll send tech insights to ${email}`);
+                this.reset();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if navbar should be scrolled on load
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
