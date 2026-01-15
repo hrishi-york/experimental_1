@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+# Trigger: When to run this action?
+on:
+  push:
+    branches: ["main"]  # Run only when code is pushed to the main branch
+
+# Permissions: Allow the action to write to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Jobs: The actual tasks to perform
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    runs-on: ubuntu-latest  # Use a virtual machine provided by GitHub
+    
+    steps:
+      # Step 1: Check out your code onto the virtual machine
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Configure Pages specifically for this repo
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Step 3: Bundle your files (index.html, etc.) for upload
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # Upload the entire root directory
+
+      # Step 4: The actual deployment to the live URL
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
