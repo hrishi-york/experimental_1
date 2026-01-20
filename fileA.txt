@@ -3,4 +3,7 @@ Feature A - part 2
 Feature A - fix
 Update on Mon Jan 19 15:08:08 IST 2026: Policy document in file4 revised.
 Update A
+<<<<<<< HEAD
 alpha change
+Line added for rebase test
+>>>>>>> 3e0a3c1 (Add change for rebase)
